@@ -15,4 +15,5 @@ Some of the Screenshots are provided below to get you the basic Idea.
 To run this app just download this repository and open it in Android Studio. And run it from there.
   
 ![At_Instance](https://github.com/Abhiuvc/Quizzler/blob/master/An_Instance.jpg?raw=true)  
-![At_End](https://github.com/Abhiuvc/Quizzler/blob/master/At_End.jpg?raw=true)
+![At_End](https://github.com/Abhiuvc/Quizzler/blob/master/At_End.jpg?raw=true)  
+![Rotated_preview](https://github.com/Abhiuvc/Quizzler/blob/master/Rotated.jpg?raw=true)
