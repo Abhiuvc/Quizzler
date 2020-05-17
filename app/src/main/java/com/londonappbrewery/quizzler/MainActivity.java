@@ -1,6 +1,8 @@
 package com.londonappbrewery.quizzler;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,17 +13,15 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-    // TODO: Declare constants here
-
-
     // TODO: Declare member variables here:
     Button mTrueButton;
     Button mFalseButton;
     TextView mQuestionTextView;
-    int mIndex;
-    int mQuestion;
     TextView mScoreTextView;
     ProgressBar mProgressBar;
+    int mIndex;
+    int mQuestion;
+    int mScore;
 
     // TODO: Uncomment to create question bank
     private TrueFalse[] mQuestionBank = new TrueFalse[] {
@@ -39,6 +39,9 @@ public class MainActivity extends Activity {
             new TrueFalse(R.string.question_12,false),
             new TrueFalse(R.string.question_13,true)
     };
+
+    // TODO: Declare constants here
+    final int PROGRESS_BAR_INCREMENT = (int)Math.ceil(100.0/mQuestionBank.length);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +77,32 @@ public class MainActivity extends Activity {
 
     private void updateQuestion(){
         mIndex = (mIndex+1) % mQuestionBank.length;
+
+        if(mIndex==0){
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Game Over!");
+            alert.setCancelable(false);
+            alert.setMessage("You scored "+mScore+" points.");
+            alert.setPositiveButton("Close Application", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            alert.show();
+        }
+
         mQuestion = mQuestionBank[mIndex].getQuestionID();
         mQuestionTextView.setText(mQuestion);
+        mProgressBar.incrementProgressBy(PROGRESS_BAR_INCREMENT);
+        mScoreTextView.setText("Score "+mScore+"/"+mQuestionBank.length);
     }
 
     private void checkAnswer(boolean userSelection){
         boolean correctAnswer = mQuestionBank[mIndex].getAnswer();
         if(userSelection==correctAnswer){
             Toast.makeText(getApplicationContext(), R.string.correct_toast, Toast.LENGTH_SHORT).show();
+            mScore = mScore+1;
         } else{
             Toast.makeText(getApplicationContext(), R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
         }
