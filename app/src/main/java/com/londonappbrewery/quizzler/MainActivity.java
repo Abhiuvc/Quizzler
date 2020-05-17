@@ -54,6 +54,15 @@ public class MainActivity extends Activity {
         mScoreTextView = findViewById(R.id.score);
         mProgressBar = findViewById(R.id.progress_bar);
 
+        if(savedInstanceState != null){
+            mScore = savedInstanceState.getInt("ScoreKey");
+            mIndex = savedInstanceState.getInt("IndexKey");
+            mScoreTextView.setText("Score "+mScore+"/"+mQuestionBank.length);
+        }else{
+            mScore = 0;
+            mIndex = 0;
+        }
+
         mQuestion = mQuestionBank[mIndex].getQuestionID();
         mQuestionTextView.setText(mQuestion);
 
@@ -107,5 +116,14 @@ public class MainActivity extends Activity {
             Toast.makeText(getApplicationContext(), R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+
+        outState.putInt("ScoreKey", mScore);
+        outState.putInt("IndexKey", mIndex);
+    }
+
 
 }
